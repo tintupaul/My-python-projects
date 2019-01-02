@@ -87,6 +87,8 @@ class MyForm(wx.Frame):
 			fn22 = self.path2
 			print('Report 1 : '+fn11)
 			print('Report 2 : '+fn22)
+#----------------------------FETCH FIRST REPORT FILE AND STORE THE NAMES OF MODULES IN report1 TABLE OF THE DATABASE ------------------------			
+			
 			d = "truncate table report1"
 			db = mysql.connector.connect(user='root', password='aparsql', host='localhost', database='report_comparison')
 			cur = db.cursor()
@@ -110,7 +112,8 @@ class MyForm(wx.Frame):
 			db.commit()
 			db.close()
 	
-		#FETCH MODULES AND STORE IN DETAILS 1
+#----------------------------FETCH MODULES AND STORE IN details1 TABLE OF THE DATABASE ------------------------
+
 			print('Processing the reports')
 			qn = "select name from report1"
 			dd = "truncate table details1"
@@ -157,10 +160,7 @@ class MyForm(wx.Frame):
 			db.close()
 			
 
-
-		#DO FOLLOWING FOR VALID REPORT2
-
-		#STORE INTO REPORT2 TABLE
+#----------------------------FETCH SECOND REPORT FILE AND STORE THE NAMES OF MODULES IN report2 TABLE OF THE DATABASE ------------------------			
 
 
 			d1 = "truncate table report2"
@@ -186,7 +186,8 @@ class MyForm(wx.Frame):
 			db1.commit()
 			db1.close()
 
-		#FETCH MODULES AND STORE IN DETAILS 2
+#----------------------------FETCH MODULES AND STORE IN details2 TABLE OF THE DATABASE ------------------------
+
 	
 			qn = "select name from report2"
 			dd = "truncate table details2"
@@ -241,10 +242,8 @@ class MyForm(wx.Frame):
 			del no_input
 		
 
-	#	OUTPUT CHOICES
-
-
 	def on_common(self, event) :
+#------------------------THIS METHOD DISPLAYS THE DETAILS OF MODULES COMMON TO BOTH THE REPORTS--------------------
 		if self.path1 != 'Report1 not chosen' and self.path2 != 'Report2 not chosen' and self.path1 != self.path2 and self.compared == 'true' :
 			fout = open('Result.txt', 'w')
 			fout.flush()
@@ -265,14 +264,12 @@ class MyForm(wx.Frame):
 		else :
 			no_input = wx.BusyInfo("PLEASE SELECT 2 DISTINCT REPORT FILES TO BE COMPARED")
 			time.sleep(0.80)
-			del no_input
-
-		
-			
+			del no_input			
 
 
 			
 	def on_diff(self, event) :
+#------------------------THIS METHOD DISPLAYS THE DETAILS OF MODULES WHICH ARE NOT COMMON TO BOTH THE REPORTS--------------------
 		if self.path1 != 'Report1 not chosen' and self.path2 != 'Report2 not chosen' and self.path1 != self.path2 and self.compared == 'true':
 				
 				fout = open('Result.txt', 'w')
@@ -324,8 +321,6 @@ class MyForm(wx.Frame):
 		try : 
 			os.remove('Result.txt')
 		except :
-#			print('no result file')
-#			time.sleep(0.0000001)
 			self.Close()
 
 		finally :
@@ -339,7 +334,7 @@ class MyForm(wx.Frame):
 
 
 
-# Run the program
+#----Run the program-------
 
 if __name__ == "__main__":
 	app = wx.App(False)
